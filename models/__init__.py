@@ -9,3 +9,4 @@ from .usuario import Usuario
 from .cliente import Cliente
 from .pedido import Pedido
 from .detalhePedido import DetalhePedido
+from .categoriaProduto import CategoriaProduto

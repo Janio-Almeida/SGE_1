@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from models import db, Cliente, Produto, Pedido, DetalhePedido, categoriaProduto
+from models import db, Cliente, Produto, Pedido, DetalhePedido, CategoriaProduto
 
-categoriaProduto_bp = Blueprint('clientes', __name__)
+categoriaProduto_bp = Blueprint('categoriaProduto', __name__)
 
 @categoriaProduto_bp.route('/clientes', methods=['POST'])
 def criar_cliente():
@@ -37,14 +37,14 @@ def relatorio():
 
     return jsonify(pedido_lista), 200
 
-# Rotas para categorias de produtos
+
 @categoriaProduto_bp.route('/categorias', methods=['POST'])
 def criar_categoria():
     categoria = request.json
-    nova_categoria = categoriaProduto(nome_categoria=categoria['nome_categoria'])
+    nova_categoria = CategoriaProduto(nome_categoria=categoria['nome_categoria'])
     db.session.add(nova_categoria)
     db.session.commit()
-    
+
     return jsonify({
         'id_categoria': nova_categoria.id_categoria,
         'nome_categoria': nova_categoria.nome_categoria
@@ -52,6 +52,6 @@ def criar_categoria():
 
 @categoriaProduto_bp.route('/categorias', methods=['GET'])
 def listar_categorias():
-    categorias = categoriaProduto.query.all()
-    
+    categorias = CategoriaProduto.query.all()
+
     return jsonify([{'id_categoria': c.id_categoria, 'nome_categoria': c.nome_categoria} for c in categorias]), 200
