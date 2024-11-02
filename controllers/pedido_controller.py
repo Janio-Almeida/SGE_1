@@ -26,28 +26,14 @@ def listar_produtos():
 
     return jsonify([{'ID': p.pedido_id, 'Nome': p.data_compra} for p in pedidos]), 200 
 
-# @produto_bp.route('/produtos/<int:id>', methods=['PUT'])
-# def atualizar_produto(id):
-#     dados = request.json
-#     produto = Produto.query.get(id)
+@pedido_bp.route('/pedidos/<int:id>', methods=['DELETE'])
+def deletar_pedido(id):
+    pedido = Pedido.query.get(id)  
 
-#     if not produto:
-#         return jsonify({'Mensagem': 'Produto não encontrado'}), 404
+    if not pedido:
+        return jsonify({'mensagem': 'Pedido não encontrado'}), 404  
 
-#     produto.produto_nome = dados['produto_nome']
-#     db.session.commit()
+    db.session.delete(pedido)  
+    db.session.commit()
+    return jsonify({'mensagem': 'Pedido excluído com sucesso'}), 200 
 
-#     return jsonify({'Produto alterado': produto.produto_nome})
-
-# @produto_bp.route('/produtos/<int:id>', methods=['DELETE'])
-# def excluir_produto(id):
-#     #dados = request.json
-#     produto = Produto.query.get(id)
-
-#     if not produto:
-#         return jsonify({'Mensagem': 'Produto não encontrado'})
-    
-#     db.session.delete(produto)
-#     db.session.commit()
-
-#     return jsonify({'Produto excluido'}), 200

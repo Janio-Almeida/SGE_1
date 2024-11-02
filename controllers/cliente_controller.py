@@ -38,3 +38,15 @@ def relatorio():
     pedido_lista = [{'produto_nome': c.produto_nome, 'cliente_nome': c.cliente_nome} for c in relatorio]
 
     return jsonify(pedido_lista), 200
+
+@cliente_bp.route('/clientes/<int:id>', methods=['DELETE'])
+def deletar_cliente(id):
+    cliente = Cliente.query.get(id)  
+
+    if not cliente:
+        return jsonify({'mensagem': 'Cliente não encontrado'}), 404 
+
+    db.session.delete(cliente) 
+    db.session.commit()  
+
+    return jsonify({'mensagem': 'Cliente excluído com sucesso'}), 200 

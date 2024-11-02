@@ -2,13 +2,13 @@ from pkgutil import iter_importers
 from flask import Flask
 from models import db
 from config import Config
+from flask_jwt_extended import JWTManager
 from controllers.usuario_controller import usuario_bp
 from controllers.produto_controller import produto_bp
 from controllers.cliente_controller import cliente_bp
 from controllers.pedido_controller import pedido_bp
 from controllers.detalhepedido_controller import detalhePedido_bp
 from controllers.categoriaproduto_controllers import categoriaProduto_bp
-
 
 
 
@@ -29,6 +29,7 @@ def criar_app():
     app.register_blueprint(pedido_bp)
     app.register_blueprint(detalhePedido_bp)
     app.register_blueprint(categoriaProduto_bp)
+    
    
 
     app.run(debug=True)

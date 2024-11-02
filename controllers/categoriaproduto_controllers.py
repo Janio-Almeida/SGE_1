@@ -55,3 +55,14 @@ def listar_categorias():
     categorias = CategoriaProduto.query.all()
 
     return jsonify([{'id_categoria': c.id_categoria, 'nome_categoria': c.nome_categoria} for c in categorias]), 200
+
+@categoriaProduto_bp.route('/categorias/<int:id>', methods=['DELETE'])
+def deletar_categoria(id):
+    categoria = CategoriaProduto.query.get(id)  
+
+    if not categoria:
+        return jsonify({'mensagem': 'Categoria não encontrada'}), 404  
+    
+    db.session.delete(categoria) 
+    db.session.commit()  
+    return jsonify({'mensagem': 'Categoria excluída com sucesso'}), 200  
